@@ -2,13 +2,13 @@ grammar Simple;
 
 program: line* EOF;
 
-line: statement | ifBlock | whileBlock ;
+line: statement | ifBlock | whileBlock;
 
 statement: (assignment | functionCall) ';';
 
 ifBlock: 'if' expression block ('else' elseIfBlock)?;
 
-elseifBlock: block | ifBlock;
+elseIfBlock: block | ifBlock;
 
 whileBlock: WHILE expression block ('else' elseIfBlock);
 
@@ -16,39 +16,39 @@ WHILE: 'while' | 'until';
 
 assignment: IDENTIFIER '=' expression;
 
-functionCall: IDENTIFIER '(' (expression (',' expression)*)? ')';
+functionCall:
+	IDENTIFIER '(' (expression (',' expression)*)? ')';
 
-expression
-  : constant                          #constantExpression
-  | IDENTIFIER                        #identifierExpression
-  | functionCall                      #functionCallExpression
-  | '(' expression ')'                #parenthisizedExpression
-  | '!' expression                    #notExpression
-  | expression multOp expression      #multiplicativeExpression
-  | expression addOp expression       #additiveExpression
-  | expression compareOp expression   #comparitiveExpression
-  | expression boolOp expression      #booleanExpression
-  ;
+expression:
+	constant							# constantExpression
+	| IDENTIFIER						# identifierExpression
+	| functionCall						# functionCallExpression
+	| '(' expression ')'				# parenthisizedExpression
+	| '!' expression					# notExpression
+	| expression multOp expression		# multiplicativeExpression
+	| expression addOp expression		# additiveExpression
+	| expression compareOp expression	# comparitiveExpression
+	| expression boolOp expression		# booleanExpression;
 
-multOp: '*' | '\' | '%' ;
+multOp: '*' | '\' | ' ' ; addOp: '+ ' | ';
 
-addOp: '+' | '-' ;
+addOp: '+' | '-';
 
-compareOp: '==' | '!=' | '>' | '<' | '>=' | '<=< | ;
+compareOp: '==' | '!=' | '>' | '<' | '>=' | '<=' |;
 
 boolOp: BOOL_OPERATOR;
 
-BOOL_OPERATOR: 'and' | 'or' | 'xor' ;
+BOOL_OPERATOR: 'and' | 'or' | 'xor';
 
-constant: INTEGER | FLOAT | STRING | BOOL | NULL ;
+constant: INTEGER | FLOAT | STRING | BOOL | NULL;
 
 INTEGER: [0-9]+;
 
-FLOAT: [0-9]+ '.' [0-9]+ ;
+FLOAT: [0-9]+ '.' [0-9]+;
 
 STRING: ('"' ~'"'* '"') | ('\'' ~'\''* '\'');
 
-BOOL: 'true' | 'false' 
+BOOL: 'true' | 'false';
 
 NULL: 'null';
 
